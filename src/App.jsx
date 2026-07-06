@@ -16,6 +16,7 @@ import {
   education,
   certifications,
   involvement,
+  codingStats,
 } from "./data";
 
 const SPIRAL_PATH =
@@ -413,6 +414,16 @@ function Experience() {
                       {t}
                     </span>
                   ))}
+                  {e.certificate && (
+                    <a
+                      href={e.certificate}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="cert-link-button"
+                    >
+                      📜 Certificate
+                    </a>
+                  )}
                 </div>
               </div>
             </article>
@@ -498,12 +509,253 @@ function Skills() {
   );
 }
 
+/* ── Card Skeleton Loader ─────────────────────────────────────────────────── */
+const CardSkeleton = () => (
+  <div className="stats-card skeleton">
+    <div className="skeleton-line header" />
+    <div className="skeleton-content">
+      <div className="skeleton-circle" />
+      <div className="skeleton-bars">
+        <div className="skeleton-line bar" />
+        <div className="skeleton-line bar" />
+        <div className="skeleton-line bar" />
+      </div>
+    </div>
+  </div>
+);
+
+/* ── Training Grounds (LeetCode & GFG Stats) ────────────────────────────── */
+function TrainingGrounds() {
+  const [lcStats, setLcStats] = useState(null);
+  const [gfgStats, setGfgStats] = useState(null);
+  const [loadingLc, setLoadingLc] = useState(true);
+  const [loadingGfg, setLoadingGfg] = useState(true);
+
+  useEffect(() => {
+    async function fetchLeetCode() {
+      try {
+        const resSolved = await fetch("https://alfa-leetcode-api.onrender.com/Sharukesh/solved");
+        const solvedData = await resSolved.json();
+        
+        const resProfile = await fetch("https://alfa-leetcode-api.onrender.com/Sharukesh/profile");
+        const profileData = await resProfile.json();
+
+        if (solvedData && solvedData.solvedProblem) {
+          setLcStats({
+            solved: solvedData.solvedProblem,
+            easy: solvedData.easySolved || 0,
+            medium: solvedData.mediumSolved || 0,
+            hard: solvedData.hardSolved || 0,
+            rank: profileData && profileData.ranking ? profileData.ranking.toLocaleString() : "78,432"
+          });
+        } else {
+          setLcStats({
+            solved: 598,
+            easy: 198,
+            medium: 328,
+            hard: 72,
+            rank: "78,432"
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load live LeetCode stats, using fallback:", err);
+        setLcStats({
+          solved: 598,
+          easy: 198,
+          medium: 328,
+          hard: 72,
+          rank: "78,432"
+        });
+      } finally {
+        setLoadingLc(false);
+      }
+    }
+
+    async function fetchGfg() {
+      try {
+        const res = await fetch(`https://corsproxy.io/?${encodeURIComponent("https://gfgstatscard.vercel.app/sharuke5dj7?raw=true")}`);
+        const data = await res.json();
+        if (data) {
+          const solved = data.totalProblemsSolved || data.problemsSolved || (data.info && (data.info["Problems Solved"] || data.info["problemsSolved"])) || 372;
+          const score = data.codingScore || (data.info && (data.info["Coding Score"] || data.info["codingScore"])) || "1,482";
+          const rank = data.monthlyRank || (data.info && (data.info["Monthly Rank"] || data.info["monthlyRank"])) || "Top 5%";
+          const contests = data.contestAttendance || (data.info && (data.info["Contest Attendance"] || data.info["contestAttendance"])) || "42+";
+
+          setGfgStats({
+            solved: parseInt(solved) || 372,
+            score: score.toString(),
+            rank: rank.toString(),
+            contests: contests.toString()
+          });
+        } else {
+          setGfgStats({
+            solved: 372,
+            score: "1,482",
+            rank: "Top 5%",
+            contests: "42+"
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load live GFG stats, using fallback:", err);
+        setGfgStats({
+          solved: 372,
+          score: "1,482",
+          rank: "Top 5%",
+          contests: "42+"
+        });
+      } finally {
+        setLoadingGfg(false);
+      }
+    }
+
+    fetchLeetCode();
+    fetchGfg();
+  }, []);
+
+  const totalPossible = 3100;
+  const solvedPercent = lcStats ? ((lcStats.solved / totalPossible) * 100).toFixed(1) : 0;
+
+  return (
+    <section className="section wrap" id="training">
+      <Reveal>
+        <Eyebrow>05 · Training Grounds</Eyebrow>
+        <h2 className="section-title">Competitive Programming</h2>
+      </Reveal>
+      <Reveal delay={100}>
+        <div className="arena-grid">
+          {/* LeetCode stats */}
+          {loadingLc || !lcStats ? (
+            <CardSkeleton />
+          ) : (
+            <div className="stats-card">
+              <div className="stats-card-header">
+                <h3 className="stats-card-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <img src="/leetcode.png" alt="LeetCode Logo" className="stats-card-logo" /> LeetCode
+                </h3>
+                <a
+                  href={codingStats.leetcode.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="stats-card-link"
+                >
+                  profile ↗
+                </a>
+              </div>
+              <div className="leetcode-circle-box">
+                <div style={{ position: 'relative', width: 120, height: 120 }}>
+                  <svg className="leetcode-circle-svg">
+                    <circle className="leetcode-circle-bg" cx="60" cy="60" r="50" />
+                    <circle
+                      className="leetcode-circle-progress"
+                      cx="60"
+                      cy="60"
+                      r="50"
+                      strokeDasharray={`${(solvedPercent * 314) / 100} 314`}
+                    />
+                  </svg>
+                  <div className="leetcode-circle-text">
+                    <span className="leetcode-circle-num">{lcStats.solved}</span>
+                    <span className="leetcode-circle-label">Solved</span>
+                  </div>
+                </div>
+                <div className="leetcode-bars">
+                  <div className="bar-row">
+                    <div className="bar-header">
+                      <span className="bar-name easy">Easy</span>
+                      <span>{lcStats.easy}</span>
+                    </div>
+                    <div className="bar-bg">
+                      <div
+                        className="bar-fill easy"
+                        style={{ width: `${(lcStats.easy / lcStats.solved) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="bar-row">
+                    <div className="bar-header">
+                      <span className="bar-name medium">Medium</span>
+                      <span>{lcStats.medium}</span>
+                    </div>
+                    <div className="bar-bg">
+                      <div
+                        className="bar-fill medium"
+                        style={{ width: `${(lcStats.medium / lcStats.solved) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="bar-row">
+                    <div className="bar-header">
+                      <span className="bar-name hard">Hard</span>
+                      <span>{lcStats.hard}</span>
+                    </div>
+                    <div className="bar-bg">
+                      <div
+                        className="bar-fill hard"
+                        style={{ width: `${(lcStats.hard / lcStats.solved) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: 24, fontSize: 13, color: 'var(--ink-faint)', fontFamily: 'var(--font-mono)' }}>
+                Global Rank: <span style={{ color: 'var(--orange)' }}>#{lcStats.rank}</span>
+              </div>
+            </div>
+          )}
+
+          {/* GFG stats */}
+          {loadingGfg || !gfgStats ? (
+            <CardSkeleton />
+          ) : (
+            <div className="stats-card">
+              <div className="stats-card-header">
+                <h3 className="stats-card-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <img src="/gfg.png" alt="GFG Logo" className="stats-card-logo" /> GeeksforGeeks
+                </h3>
+                <a
+                  href={codingStats.gfg.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="stats-card-link"
+                >
+                  profile ↗
+                </a>
+              </div>
+              <div className="gfg-metrics">
+                <div className="gfg-metric">
+                  <div className="gfg-metric-value">{gfgStats.solved}</div>
+                  <div className="gfg-metric-label">Problems Solved</div>
+                </div>
+                <div className="gfg-metric">
+                  <div className="gfg-metric-value">{gfgStats.score}</div>
+                  <div className="gfg-metric-label">Coding Score</div>
+                </div>
+                <div className="gfg-metric">
+                  <div className="gfg-metric-value">{gfgStats.rank}</div>
+                  <div className="gfg-metric-label">Monthly Rank</div>
+                </div>
+                <div className="gfg-metric">
+                  <div className="gfg-metric-value">{gfgStats.contests}</div>
+                  <div className="gfg-metric-label">Contest Attendance</div>
+                </div>
+              </div>
+              <div style={{ marginTop: 24, fontSize: 13, color: 'var(--ink-faint)', fontFamily: 'var(--font-mono)' }}>
+                Verified Username: <span style={{ color: 'var(--orange)' }}>sharuke5dj7</span>
+              </div>
+            </div>
+          )}
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
 /* ── Education / Certifications / Involvement ───────────────────────────── */
 function Details() {
   return (
     <section className="section wrap" id="education">
       <Reveal>
-        <Eyebrow>05 · Origin</Eyebrow>
+        <Eyebrow>06 · Origin</Eyebrow>
         <h2 className="section-title">Education &amp; more</h2>
       </Reveal>
       <div className="detail-grid" style={{ marginTop: 50 }}>
@@ -523,9 +775,20 @@ function Details() {
           <div className="detail-block">
             <div className="detail-h">Certifications</div>
             {certifications.map((c, i) => (
-              <div className="cert-item" key={c}>
+              <div className="cert-item" key={c.title}>
                 <b>0{i + 1}</b>
-                <span>{c}</span>
+                <span>{c.title}</span>
+                {c.link && (
+                  <a
+                    href={c.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="cert-icon-link"
+                    title="View Certificate"
+                  >
+                    ↗
+                  </a>
+                )}
               </div>
             ))}
           </div>
@@ -548,7 +811,7 @@ function Contact() {
       <Reveal>
         <div className="contact-lead">
           <Spiral className="spin-mark" />
-          06 · Summon Me
+          07 · Summon Me
         </div>
         <div className="contact-big">
           <a href={`mailto:${profile.email}`}>
@@ -571,8 +834,18 @@ function Contact() {
             <a href={profile.linkedin} target="_blank" rel="noreferrer">
               <span className="num">04</span> LinkedIn
             </a>
+            {profile.leetcode && (
+              <a href={profile.leetcode} target="_blank" rel="noreferrer">
+                <span className="num">05</span> LeetCode
+              </a>
+            )}
+            {profile.gfg && (
+              <a href={profile.gfg} target="_blank" rel="noreferrer">
+                <span className="num">06</span> GeeksforGeeks
+              </a>
+            )}
             <a href={profile.resume} target="_blank" rel="noreferrer">
-              <span className="num">05</span> Résumé ↓
+              <span className="num">07</span> Résumé ↓
             </a>
           </div>
           <div className="contact-note">
@@ -615,6 +888,7 @@ export default function App() {
         <Experience />
         <Projects />
         <Skills />
+        <TrainingGrounds />
         <Details />
         <Contact />
       </main>

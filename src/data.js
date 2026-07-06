@@ -11,11 +11,13 @@ export const profile = {
   tagline:
     "I build full-stack products and AI-driven systems — from healthcare workflows to real-time threat detection.",
   summary:
-    "Computer Science graduate from College of Engineering Guindy with hands-on experience in full-stack development, machine learning, and AI-driven healthcare automation. I work fluently across Python, TypeScript, React and Node, care deeply about reliability, and have sharpened my fundamentals through 700+ solved coding challenges.",
+    "Computer Science graduate from College of Engineering Guindy with hands-on experience in full-stack development, LLM evaluation, and healthcare workflow automation from athenahealth. Proficient across Python, TypeScript, React, Node.js, and PostgreSQL. Experienced in building reliable features, API migrations, and Playwright E2E test automation. Strong problem-solving foundation with 700+ solved coding challenges, driven to build scalable and secure systems.",
   email: "sharukeshkkvs@gmail.com",
   phone: "+91 6381086085",
   github: "https://github.com/sharu-kesh",
   linkedin: "https://www.linkedin.com/in/sharukesh-kannan-9696a5264/",
+  leetcode: "https://leetcode.com/u/Sharukesh/",
+  gfg: "https://www.geeksforgeeks.org/user/sharuke5dj7/",
   resume: "/Sharukesh_K_Software_Engineer_Resume.pdf",
   photo: "/sharukesh.jpg",
 };
@@ -31,15 +33,17 @@ export const experience = [
   {
     role: "Product Engineering Intern",
     company: "athenahealth Technology Pvt Ltd",
-    period: "Jan 2026 — Present",
+    period: "Jan 2026 — July 2026",
     location: "Chennai",
     points: [
-      "Working across athena Medical Coding and ECR Denials Management teams on production healthcare workflows — AI-assisted coding, claim processing, denial resolution and appeal management.",
-      "Evaluated open-source LLMs with AWS SageMaker and LM Studio across 10K+ encounter test cases, benchmarking accuracy, latency, precision, recall and structured-output reliability.",
-      "Strengthened platform reliability and compliance through PHI log redaction, GenAI fallback logic, E/M prompt updates, V2 endpoint migration, Playwright E2E automation and production triage.",
-      "Built ECR appeal workflow enhancements in React/TypeScript — document selection, appeal-success confirmation, charge-level POS support, mocked API routes and failure-state validation.",
+      "Worked as a Product Engineering Intern across athena Medical Coding and ECR Denials Management teams, contributing to production healthcare revenue cycle workflows involving medical coding, claim processing, denial resolution, and appeal management.",
+      "Developed and enhanced React/TypeScript workflow features for claim and appeal systems, including document selection, appeal submission confirmation, navigation flows, and charge-level coding advice support.",
+      "Evaluated open-source LLMs using AWS SageMaker and LM Studio across 10K+ encounter-level test cases, benchmarking accuracy, latency, precision, recall, and structured-output reliability for clinical decision automation.",
+      "Improved platform reliability, compliance, and maintainability through PHI log redaction, GenAI fallback logic, API migration support, prompt updates, rollout cleanup, regression analysis, and production issue triage.",
+      "Built and maintained Playwright E2E test automation with mocked API routes, page-object models, failure-state validation, and pre-push test integration to improve release confidence.",
     ],
     tags: ["React", "TypeScript", "AWS SageMaker", "LLM Eval", "Playwright"],
+    certificate: "/athena_internship_certificate.pdf",
   },
   {
     role: "Research Intern",
@@ -47,9 +51,12 @@ export const experience = [
     period: "May 2025 — July 2025",
     location: "Chennai",
     points: [
-      "Researched Boolean function analysis, decision tree complexity, junta functions, query complexity and Fourier analysis in learning theory.",
+      "Worked as a Research Intern in the Department of Computer Science and Engineering at IIT Madras, focusing on theoretical computer science, learning theory, and algorithmic complexity.",
+      "Studied Boolean function analysis, decision tree complexity, junta functions, query complexity, and Fourier analysis to understand function approximation, variable influence, and computational limitations in learning algorithms.",
+      "Applied mathematical reasoning and research-oriented problem solving to analyze theoretical models, compare algorithmic behavior, and strengthen foundations in data structures, algorithms, and machine learning theory.",
     ],
     tags: ["Learning Theory", "Boolean Analysis", "Research"],
+    certificate: "https://drive.google.com/file/d/1Zt1IWQQi7UH_JpPxF0QclJPwzoASjCb4/view?usp=sharing",
   },
 ];
 
@@ -61,6 +68,7 @@ export const projects = [
       "A real-time CCTV threat detection pipeline combining YOLOv11, a Transformer and an LSTM, surfacing live alerts on a React dashboard with location, timestamp and a live map.",
     tags: ["YOLOv11", "Transformer", "LSTM", "React"],
     link: "https://github.com/sharu-kesh/real-time-threat-detection-cctv",
+    image: "/threat_detection.png",
   },
   {
     index: "02",
@@ -69,14 +77,16 @@ export const projects = [
       "A multi-layer detection framework that catches prompt-injection and jailbreak attacks using prompt mutation, KL divergence, semantic similarity, BERT-based policy validation and XAI audit logs.",
     tags: ["LLM Security", "BERT", "XAI", "Python"],
     link: "#", // TODO
+    image: "/secure_prompt.png",
   },
   {
     index: "03",
-    title: "Blog Sharing Platform",
+    title: "Daily Diaries - Blog Sharing Platform",
     blurb:
       "A full-stack blogging platform on Spring Boot and React with posting, comments, likes, a follow system, saved blogs and microservice-based modules.",
     tags: ["Spring Boot", "React", "Microservices"],
     link: "#", // TODO
+    image: "/blog_platform.png",
   },
   {
     index: "04",
@@ -85,6 +95,7 @@ export const projects = [
       "A React Native emergency-reporting app on Express and MongoDB with geolocation, image-based reports and crowdsourced response decisions.",
     tags: ["React Native", "Express", "MongoDB"],
     link: "#", // TODO
+    image: "/disaster_system.png",
   },
   {
     index: "05",
@@ -171,12 +182,27 @@ export const education = [
 ];
 
 export const certifications = [
-  "Machine Learning A-Z: AI, Python & more — Udemy",
-  "Neural Networks and Deep Learning — Coursera",
+  {
+    title: "Machine Learning A-Z: AI, Python & more — Udemy",
+    link: "https://drive.google.com/file/d/1-shLFWyvYf2ojVdgJ4HApezAx3eBNRee/view?usp=sharing"
+  },
+  {
+    title: "Neural Networks and Deep Learning — Coursera",
+    link: "https://drive.google.com/file/d/1_BwgcQlgFsJg3bvlnFs-2XWZPhtpUuOD/view?usp=sharing"
+  }
 ];
 
 export const involvement = {
   title: "President — Computer Society of Anna University",
   detail:
-    "Led domain teams and organized technical events, workshops and placement-focused student initiatives.",
+    "As President of CSAU, I defined the society's vision and led cross-functional student teams in planning and delivering technical events, workshops, and placement-focused initiatives. Managed faculty and industry partnerships, directed branding and event operations, and strengthened skills in project management, stakeholder communication, and collaborative leadership.",
+};
+
+export const codingStats = {
+  leetcode: {
+    link: "https://leetcode.com/u/Sharukesh/",
+  },
+  gfg: {
+    link: "https://www.geeksforgeeks.org/user/sharuke5dj7/",
+  }
 };

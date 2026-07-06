@@ -90,9 +90,10 @@ export const projects = [
     index: "05",
     title: "Vehicle Management System",
     blurb:
-      "A React, Express and PostgreSQL system managing vehicle records, certificates, insurance, missing-vehicle complaints and police authentication.",
+      "A unified full-stack vehicle records portal built with React, Node/Express, and PostgreSQL featuring a multi-step registration wizard, secure ownership transfer with automated SMTP credentials, police theft-tracking alerts, and RTO admin validation workflows.",
     tags: ["React", "Express", "PostgreSQL"],
-    link: "#", // TODO
+    link: "https://vaahanapp.netlify.app/",
+    image: "/vaahan_system.png",
   },
 ];
 

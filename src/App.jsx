@@ -444,6 +444,11 @@ function Projects() {
               target={p.link.startsWith("http") ? "_blank" : undefined}
               rel="noreferrer"
             >
+              {p.image && (
+                <div className="project-image-wrapper">
+                  <img src={p.image} alt={p.title} className="project-image" />
+                </div>
+              )}
               <div className="project-top">
                 <span className="project-index">{p.index}</span>
                 <span className="project-arrow">↗</span>

@@ -88,7 +88,7 @@ export const projects = [
   },
   {
     index: "05",
-    title: "Vehicle Management System",
+    title: "Vaahan - Vehicle Management System",
     blurb:
       "A unified full-stack vehicle records portal built with React, Node/Express, and PostgreSQL featuring a multi-step registration wizard, secure ownership transfer with automated SMTP credentials, police theft-tracking alerts, and RTO admin validation workflows.",
     tags: ["React", "Express", "PostgreSQL"],
